@@ -27,16 +27,9 @@ else
 fi
 }
 
-   dnf module disable nodejs -y &>>$LOGS_FILE
-    VALIDATE $? "Disabling nodejs default version"
-    dnf module enable nodejs:20 -y &>>$LOGS_FILE
-    VALIDATE $? "Enabling NodeJS 20"
+    dnf install nginx -y &>>$LOGS_FILE
+    VALIDATE $? "Installing Nginx"
 
-    dnf install nodejs -y &>>$LOGS_FILE
-    VALIDATE $? "Installing NodeJS"
-
-    npm install &>>$LOGS_FILE
-    VALIDATE $? "Installing npm"
 
     rm -rf /usr/share/nginx/html/* &>>$LOGS_FILE
     VALIDATE $? "Removing default content"
@@ -44,7 +37,7 @@ fi
     curl -o /tmp/frontend.zip https://expense-joindevops.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip  &>>$LOGS_FILE
 
     cd /usr/share/nginx/html &>>$LOGS_FILE
-    VALIDATE "Chaging the directory to the app"
+    VALIDATE $? "Chaging the directory to the app"
 
     unzip /tmp/frontend.zip &>>$LOGS_FILE
     VALIDATE $? "Downloaded and unzipped frontend"
