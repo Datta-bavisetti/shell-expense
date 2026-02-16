@@ -43,13 +43,13 @@ if [ $? -el 0 ]; then
     echo "Created expense user"
 else
     echo "User already exists..$Y SKIPPING $N"
-
+fi
 mkdir /app  &>>$LOGS_FILE
 VALIDATE $? "Created app directory"
 
 curl -o /tmp/backend.zip https://expense-joindevops.s3.us-east-1.amazonaws.com/expense-backend-v2.zip  &>>$LOGS_FILE
 cd /app  &>>$LOGS_FILE
-VALIDATE "Chaging the directory to the app"
+VALIDATE $? "Chaging the directory to the app"
 
 unzip /tmp/backend.zip  &>>$LOGS_FILE
 VALIDATE $? "Downloaded and unzipped frontend"
