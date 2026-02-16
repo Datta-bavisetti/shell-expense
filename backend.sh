@@ -28,12 +28,15 @@ fi
 }
 
 dnf module disable nodejs -y &>>$LOGS_FILE
-
+VALIDATE $? "Disabling nodejs default version"
 dnf module enable nodejs:20 -y &>>$LOGS_FILE
+VALIDATE $? "Enabling NodeJS 20"
 
 dnf install nodejs -y &>>$LOGS_FILE
+VALIDATE $? "Installing NodeJS"
 
 dnf update -y openssh openssh-server openssh-clients &>>$LOGS_FILE
+VALIDATE $? "Updating openssh"
 
 useradd expense  &>>$LOGS_FILE
 if [ $? -el 0 ]; then
@@ -69,3 +72,4 @@ VALIDATE $? "App data loaded"
 
 systemctl restart backend &>>$LOGS_FILE
 VALIDATE $? "Restarted backend service"
+
